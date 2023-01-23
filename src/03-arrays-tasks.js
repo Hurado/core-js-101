@@ -525,16 +525,15 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-  const map = new Map();
-  array.forEach((item) => {
+  return array.reduce((acc, item) => {
     const key = keySelector(item);
     const value = valueSelector(item);
-    if (!map.has(key)) {
-      map.set(key, []);
+    if (!acc.has(key)) {
+      acc.set(key, []);
     }
-    map.get(key).push(value);
-  });
-  return map;
+    acc.get(key).push(value);
+    return acc;
+  }, new Map());
 }
 /**
  * Projects each element of the specified array to a sequence
@@ -589,9 +588,10 @@ function getElementByIndexes(arr, indexes) {
  */
 function swapHeadAndTail(arr) {
   const middle = Math.floor(arr.length / 2);
-  const head = arr.slice(0, middle);
-  const tail = arr.slice(middle);
-  return tail.concat(head);
+  if (arr.length % 2 === 0) {
+    return arr.slice(middle).concat(arr.slice(0, middle));
+  }
+  return arr.slice(middle + 1).concat(arr[middle]).concat(arr.slice(0, middle));
 }
 
 module.exports = {

@@ -54,10 +54,7 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-  if (isFinite(value1) && isFinite(value2)) {
-    return (value1 + value2) / 2;
-  }
-  return Infinity;
+  return (value1 / 2 + value2 / 2);
 }
 
 
