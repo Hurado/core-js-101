@@ -25,6 +25,7 @@
  *
  */
 function getComposition(f, g) {
+  // eslint-disable-next-line func-names
   return function (x) {
     return f(g(x));
   };
@@ -47,6 +48,7 @@ function getComposition(f, g) {
  *
  */
 function getPowerFunction(exponent) {
+  // eslint-disable-next-line func-names
   return function (x) {
     return Math.pow(x, exponent);
   };
