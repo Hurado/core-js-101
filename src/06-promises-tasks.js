@@ -28,10 +28,19 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
+function willYouMarryMe(isPositiveAnswer) {
+  return new Promise((resolve, reject) => {
+    if (typeof isPositiveAnswer === 'boolean') {
+      if (isPositiveAnswer === true) {
+        resolve('Hooray!!! She said "Yes"!');
+      } else {
+        resolve('Oh no, she said "No".');
+      }
+    } else {
+      reject(new Error('Wrong parameter is passed! Ask her again.'));
+    }
+  });
 }
-
 
 /**
  * Return Promise object that should be resolved with array containing plain values.
@@ -48,8 +57,16 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  return new Promise((resolve, reject) => {
+    if (Array.isArray(array)) {
+      Promise.all(array)
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
+    } else {
+      reject(new Error('Input is not an array of promises.'));
+    }
+  });
 }
 
 /**
@@ -71,8 +88,16 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return new Promise((resolve, reject) => {
+    if (Array.isArray(array)) {
+      Promise.race(array)
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
+    } else {
+      reject(new Error('Input is not an array of promises.'));
+    }
+  });
 }
 
 /**
@@ -92,8 +117,16 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+function chainPromises(array, action) {
+  return array.reduce((promiseChain, currentPromise) => promiseChain
+    .then((chainResults) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
+      currentPromise.then((currentResult) => [...chainResults, currentResult]))
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      return promiseChain;
+    }), Promise.resolve([])).then((results) => results.reduce(action));
 }
 
 module.exports = {

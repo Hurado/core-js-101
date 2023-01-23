@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* ************************************************************************************************
  *                                                                                                *
  * Please read the following tutorial before implementing tasks:                                   *
@@ -20,8 +21,13 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  this.width = width;
+  this.height = height;
+  // eslint-disable-next-line func-names
+  this.getArea = function () {
+    return this.width * this.height;
+  };
 }
 
 
@@ -35,8 +41,8 @@ function Rectangle(/* width, height */) {
  *    [1,2,3]   =>  '[1,2,3]'
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
-function getJSON(/* obj */) {
-  throw new Error('Not implemented');
+function getJSON(obj) {
+  return JSON.stringify(obj);
 }
 
 
@@ -51,8 +57,14 @@ function getJSON(/* obj */) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  const parsedJson = JSON.parse(json);
+  const object = Object.create(proto);
+  // eslint-disable-next-line guard-for-in
+  for (const key in parsedJson) {
+    object[key] = parsedJson[key];
+  }
+  return object;
 }
 
 
@@ -109,7 +121,6 @@ function fromJSON(/* proto, json */) {
  *
  *  For more examples see unit tests.
  */
-
 const cssSelectorBuilder = {
   element(/* value */) {
     throw new Error('Not implemented');
@@ -140,6 +151,200 @@ const cssSelectorBuilder = {
   },
 };
 
+// id: function(value) {
+// return new IDSelector(value);
+// },
+
+// class: function(value) {
+// return new ClassSelector(value);
+// },
+
+// attr: function(value) {
+// return new AttributeSelector(value);
+// },
+
+// pseudoClass: function(value) {
+// return new PseudoClassSelector(value);
+// },
+
+// pseudoElement: function(value) {
+// return new PseudoElementSelector(value);
+// },
+
+// combine: function(selector1, combinator, selector2) {
+// return new CombinedSelector(selector1, combinator, selector2);
+// },
+// };
+
+// class Selector {
+// constructor() {}
+
+// stringify() {
+// throw new Error('Not implemented');
+// }
+// }
+
+// class ElementSelector extends Selector {
+// constructor(element) {
+// super();
+// this.element = element;
+// }
+
+// stringify() {
+// return this.element;
+// }
+// }
+
+// class IDSelector extends Selector {
+// constructor(id) {
+// super();
+// this.id = id;
+// }
+
+// stringify() {
+// return "#" + this.id;
+// }
+// }
+
+// class ClassSelector extends Selector {
+// constructor(className) {
+// super();
+// this.className = className;
+// }
+
+// stringify() {
+// return "." + this.className;
+// }
+// }
+
+// class AttributeSelector extends Selector {
+// constructor(attr) {
+// super();
+// this.attr
+// class Selector {
+//   constructor(value) {
+//   this.value = value;
+//   }
+
+//   stringify() {
+//   return this.value;
+//   }
+//   }
+
+//   class ElementSelector extends Selector {
+//   id(id) {
+//   return new IDSelector(${this.value}#${id});
+//   }
+
+//   class(className) {
+//   return new ClassSelector(${this.value}.${className});
+//   }
+
+//   attr(attr) {
+//   return new AttributeSelector(${this.value}[${attr}]);
+//   }
+
+//   pseudoClass(pseudoClass) {
+//   return new PseudoClassSelector(${this.value}:${pseudoClass});
+//   }
+
+//   pseudoElement(pseudoElement) {
+//   return new PseudoElementSelector(${this.value}::${pseudoElement});
+//   }
+//   }
+
+//   class IDSelector extends Selector {
+//   class(className) {
+//   return new ClassSelector(${this.value}.${className});
+//   }
+
+//   attr(attr) {
+//   return new AttributeSelector(${this.value}[${attr}]);
+//   }
+
+//   pseudoClass(pseudoClass) {
+//   return new PseudoClassSelector(${this.value}:${pseudoClass});
+//   }
+
+//   pseudoElement(pseudoElement) {
+//   return new PseudoElementSelector(${this.value}::${pseudoElement});
+//   }
+//   }
+//   class ClassSelector extends Selector {
+//     constructor(className) {
+//     super();
+//     this.className = className;
+//     }
+//     stringify() {
+//         return `.${this.className}`;
+//     }
+//     }
+
+//     class AttributeSelector extends Selector {
+//     constructor(attr) {
+//     super();
+//     this.attr = attr;
+//     }
+//     stringify() {
+//         return `[${this.attr}]`;
+//     }
+//     }
+
+//     class PseudoClassSelector extends Selector {
+//     constructor(pseudoClass) {
+//     super();
+//     this.pseudoClass = pseudoClass;
+//     }
+//     stringify() {
+//         return `:${this.pseudoClass}`;
+//     }
+//     }
+
+//     class PseudoElementSelector extends Selector {
+//     constructor(pseudoElement) {
+//     super();
+//     this.pseudoElement = pseudoElement;
+//     }
+//     stringify() {
+//         return `::${this.pseudoElement}`;
+//     }
+//     }
+
+//     class CombinedSelector extends Selector {
+//     constructor(selector1, combinator, selector2) {
+//     super();
+//     this.selector1 = selector1;
+//     this.combinator = combinator;
+//     this.selector2 = selector2;
+//     }
+//     stringify() {
+//         return `${this.selector1.stringify()} ${this.combinator} ${this.selector2.stringify()}`;
+//     }
+//     }
+
+//     const cssSelectorBuilder = {
+//     element: function(value) {
+//     return new ElementSelector(value);
+//     },
+//     id: function(value) {
+//     return new IDSelector(value);
+//     },
+//     class: function(value) {
+//     return new ClassSelector(value);
+//     },
+//     attr: function(value) {
+//     return new AttributeSelector(value);
+//     },
+//     pseudoClass: function(value) {
+//     return new PseudoClassSelector(value);
+//     },
+//     pseudoElement: function(value) {
+//     return new PseudoElementSelector(value);
+//     },
+//     combine: function(selector1, combinator, selector2) {
+//     return new CombinedSelector(selector1, combinator, selector2);
+//     },
+//     };
 
 module.exports = {
   Rectangle,
